@@ -45,7 +45,7 @@ const BlockBank = {
       engine.addProvider(new Web3Subprovider(new Web3.providers.HttpProvider(rpcUrl,0,username,password)))
     }
 
-    engine.on('error', err => console.error(err.stack))
+    // engine.on('error', err => console.error(err.stack))
     engine.enable = options.enable
     engine.isBlockBank = true
     engine.start()

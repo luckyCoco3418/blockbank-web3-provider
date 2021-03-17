@@ -39311,21 +39311,28 @@ utils.intFromLE = intFromLE;
 
 },{"bn.js":45,"minimalistic-assert":269,"minimalistic-crypto-utils":270}],165:[function(require,module,exports){
 module.exports={
-  "_from": "elliptic@^6.5.2",
+  "_args": [
+    [
+      "elliptic@6.5.4",
+      "D:\\20_AIBB_IonicWallet\\blockbank-web3-provider"
+    ]
+  ],
+  "_development": true,
+  "_from": "elliptic@6.5.4",
   "_id": "elliptic@6.5.4",
   "_inBundle": false,
   "_integrity": "sha512-iLhC6ULemrljPZb+QutR5TQGB+pdW6KGD5RSegS+8sorOZT+rdQFbsQFJgvN3eRqNALqJer4oQ16YvJHlU8hzQ==",
   "_location": "/elliptic",
   "_phantomChildren": {},
   "_requested": {
-    "type": "range",
+    "type": "version",
     "registry": true,
-    "raw": "elliptic@^6.5.2",
+    "raw": "elliptic@6.5.4",
     "name": "elliptic",
     "escapedName": "elliptic",
-    "rawSpec": "^6.5.2",
+    "rawSpec": "6.5.4",
     "saveSpec": null,
-    "fetchSpec": "^6.5.2"
+    "fetchSpec": "6.5.4"
   },
   "_requiredBy": [
     "/browserify-sign",
@@ -39337,9 +39344,8 @@ module.exports={
     "/secp256k1"
   ],
   "_resolved": "https://registry.npmjs.org/elliptic/-/elliptic-6.5.4.tgz",
-  "_shasum": "da37cebd31e79a1367e941b592ed1fbebd58abbb",
-  "_spec": "elliptic@^6.5.2",
-  "_where": "D:\\20_AIBB_IonicWallet\\blockbank-web3-provider\\node_modules\\ethereumjs-util",
+  "_spec": "6.5.4",
+  "_where": "D:\\20_AIBB_IonicWallet\\blockbank-web3-provider",
   "author": {
     "name": "Fedor Indutny",
     "email": "fedor@indutny.com"
@@ -39347,7 +39353,6 @@ module.exports={
   "bugs": {
     "url": "https://github.com/indutny/elliptic/issues"
   },
-  "bundleDependencies": false,
   "dependencies": {
     "bn.js": "^4.11.9",
     "brorand": "^1.1.0",
@@ -39357,7 +39362,6 @@ module.exports={
     "minimalistic-assert": "^1.0.1",
     "minimalistic-crypto-utils": "^1.0.1"
   },
-  "deprecated": false,
   "description": "EC cryptography",
   "devDependencies": {
     "brfs": "^2.0.2",
@@ -55707,17 +55711,15 @@ HookedWalletSubprovider.prototype.handleRequest = function(payload, next, end){
       })
       return
 
-    case 'eth_call':
-      txParams = payload.params[0]
-      txParams.chainType = "ETH"
-      waterfall([
-        (cb) => self.ethCall(txParams, cb),
-      ], end)
-      return
+    // case 'eth_call':
+    //   txParams = payload.params[0]
+    //   waterfall([
+    //     (cb) => self.ethCall(txParams, cb),
+    //   ], end)
+    //   return
 
     case 'eth_sendTransaction':
       txParams = payload.params[0]
-      txParams.chainType = "ETH"
       waterfall([
         // (cb) => self.validateTransaction(txParams, cb),
         (cb) => self.processTransaction(txParams, cb),
@@ -55726,7 +55728,6 @@ HookedWalletSubprovider.prototype.handleRequest = function(payload, next, end){
 
     case 'eth_signTransaction':
       txParams = payload.params[0]
-      txParams.chainType = "ETH"
       waterfall([
         // (cb) => self.validateTransaction(txParams, cb),
         (cb) => self.processSignTransaction(txParams, cb),
@@ -55744,7 +55745,6 @@ HookedWalletSubprovider.prototype.handleRequest = function(payload, next, end){
         from: address,
         data: message,
       })
-      msgParams.chainType = "ETH"
       waterfall([
         // (cb) => self.validateMessage(msgParams, cb),
         (cb) => self.processMessage(msgParams, cb),
@@ -55784,7 +55784,6 @@ HookedWalletSubprovider.prototype.handleRequest = function(payload, next, end){
         from: address,
         data: message,
       })
-      msgParams.chainType = "ETH"
       waterfall([
         // (cb) => self.validatePersonalMessage(msgParams, cb),
         (cb) => self.processPersonalMessage(msgParams, cb),
@@ -63622,9 +63621,7 @@ var BlockBank = {
       engine.addProvider(new Web3Subprovider(new Web3.providers.HttpProvider(rpcUrl, 0, username, password)));
     }
 
-    engine.on('error', function (err) {
-      return console.error(err.stack);
-    });
+    // engine.on('error', err => console.error(err.stack))
     engine.enable = options.enable;
     engine.isBlockBank = true;
     engine.start();
